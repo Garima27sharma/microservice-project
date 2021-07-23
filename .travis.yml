@@ -1,13 +1,13 @@
 language: node_js
 node_js:
-  - 13
+  - 12.22
 
 services:
   - docker
 
 script:
   - docker --version
-  - docker-compose -f docker-compose-build.yml build
+  - docker-compose -f docker-compose-build.yaml build
 
 deploy:
   provider: script
