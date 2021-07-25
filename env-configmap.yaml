@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  AWS_BUCKET: ___test-661939815197-bucket___
+  AWS_PROFILE: ___default___
+  AWS_REGION: ___us-east-1___
+  POSTGRES_DB: ___udagramdb2___
+  POSTGRES_HOST: ___udagramdb2.cwfzwmp9ek62.us-east-2.rds.amazonaws.com___
+  URL: http://localhost:8100
+metadata:
+  name: env-config
