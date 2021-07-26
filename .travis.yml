@@ -11,8 +11,6 @@ script:
 
 deploy:
   provider: script
-  script:
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker-compose -f docker-compose-build.yaml push
+  script: bash docker_push.sh
   on:
     branch: master
