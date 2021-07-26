@@ -10,10 +10,9 @@ script:
   - docker-compose -f docker-compose-build.yaml build
 
 deploy:
-  skip_cleanup: true
   provider: script
   script:
-    - chmod +x docker_push.sh
-    - bash docker_push.sh
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker-compose -f docker-compose-build.yaml push
   on:
     branch: master
