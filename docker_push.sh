@@ -1,4 +1,8 @@
-#!/usr/bin/env bash
+#echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+# echo $env:DOCKER_PASSWORD | docker login -u $env:DOCKER_USERNAME --password-stdin  ## for windows
+# docker login -u $env:DOCKER_USERNAME -p $env:DOCKER_PASSWORD
 
-echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-docker-compose -f docker-compose-build.yaml push
+#docker-compose -f docker-compose-build.yaml push
+
+
+

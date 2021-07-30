@@ -1,40 +1,28 @@
-# language: minimal
+branches:
+  only:
+    - master
 
-# services:
-#   - docker
+language: node_js
+node_js:
+  - 12.22
 
-# script:
-#   - docker --version
-#   - docker-compose -f docker-compose-build.yaml build
+services:
+  - docker
 
-# deploy:
-#   provider: script
-#   script: bash docker_push.sh
-#   on:
-#     branch: master
+script:
+  - docker --version
+  - docker build -t reverseproxy:latest -f udagram-reverseproxy/Dockerfile udagram-reverseproxy/
+  - docker tag udagram-reverseproxy:latest docker12345gp/reverseproxy:latest
+  - docker build -t udagram-frontend:latest -f udagram-frontend/Dockerfile udagram-frontend/
+  - docker tag udagram-frontend:latest docker12345gp/udagram-frontend:latest
+  - docker build -t udagram-api-user:latest -f udagram-api-user/Dockerfile udagram-api-user/
+  - docker tag udagram-api-user:latest docker12345gp/udagram-api-user:latest
+  - docker build -t udagram-api-feed:latest -f udagram-api-feed/Dockerfile udagram-api-feed/
+  - docker tag udagram-api-feed:latest docker12345gp/udagram-api-feed:latest
 
-language: minimal
-
-services: docker
-
-env:
-  - DOCKER_COMPOSE_VERSION=1.24.1
-
-before_install:
-  - docker -v && docker-compose -v
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  # - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-  # - chmod +x ./kubectl
-  # - sudo mv ./kubectl /usr/local/bin/kubectl
-
-install:
-  - docker-compose -f docker-compose-build.yaml build --parallel
-
-deploy:
-  - provider: script
-    script: bash publish.sh
-    on:
-      branch: master
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push  docker12345gp/reverseproxy
+  - docker push  docker12345gp/udagram-frontend
+  - docker push  docker12345gp/udagram-api-user
+  - docker push  docker12345gp/udagram-api-feed

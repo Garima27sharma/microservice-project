@@ -11,30 +11,36 @@ services:
   backend-user:
     image: udagram-api-user
     environment:
-      POSTGRES_USERNAME: $POSTGRES_USERNAME
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD 
-      POSTGRES_DB: $POSTGRES_DB 
-      POSTGRES_HOST: $POSTGRES_HOST
-      AWS_REGION: $AWS_REGION 
-      AWS_PROFILE: $AWS_PROFILE 
-      AWS_BUCKET: $AWS_BUCKET
-      JWT_SECRET: $JWT_SECRET
-      URL: "http://localhost:8100"
+      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      AWS_REGION: ${AWS_REGION}
+      AWS_PROFILE: ${AWS_PROFILE}
+      AWS_BUCKET: ${AWS_BUCKET}
+      JWT_SECRET: ${JWT_SECRET}
+      URL: ${URL}
+      BACKEND_PORT: ${BACKEND_PORT}
+    ports: 
+      - '8081:8081'
   backend-feed:
     image: udagram-api-feed
     volumes:
-      - $HOME/.aws:/root/.aws
+      - ${HOME/.aws:/root/.aws}
     environment:
-      POSTGRES_USERNAME: $POSTGRES_USERNAME
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD 
-      POSTGRES_DB: $POSTGRES_DB
-      POSTGRES_HOST: $POSTGRES_HOST
-      AWS_REGION: $AWS_REGION
-      AWS_PROFILE: $AWS_PROFILE 
-      AWS_BUCKET: $AWS_BUCKET
-      JWT_SECRET: $JWT_SECRET
-      URL: "http://localhost:8100"
+      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      AWS_REGION: ${AWS_REGION}
+      AWS_PROFILE: ${AWS_PROFILE}
+      AWS_BUCKET: ${AWS_BUCKET}
+      JWT_SECRET: ${JWT_SECRET}
+      URL: ${URL}
+      BACKEND_PORT: ${BACKEND_PORT}
+    ports: 
+      - '8082:8082'
   frontend:
-    image: udagram-frontend:local
+    image: udagram-frontend
     ports:
       - "8100:80"
